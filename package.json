@@ -1,0 +1,21 @@
+{
+  "name": "jschain-basic",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Minimal terminal blockchain in JavaScript (accounts, signed tx, blocks)",
+  "bin": {
+    "jschain": "./cli.js"
+  },
+  "scripts": {
+    "start": "node ./cli.js",
+    "dev": "node ./cli.js --help"
+  },
+  "dependencies": {
+    "@noble/hashes": "^1.8.0",
+    "@noble/secp256k1": "^2.3.0",
+    "ethereum-cryptography": "^2.1.2",
+    "fs-extra": "^11.2.0",
+    "rlp": "^3.0.0",
+    "yargs": "^17.7.2"
+  }
+}
