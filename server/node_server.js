@@ -3,6 +3,24 @@ import http from 'http';
 import url from 'url';
 
 import { initGenesis, proposeBlock } from '../lib/chain.js';
+import { ENABLE_RPC_WRITE, RPC_RATE_LIMIT_QPS, ALLOW_ORIGINS } from '../lib/config.js'
+
+// basic token bucket per IP
+const buckets = new Map();
+function allow(ip) {
+  const cap = RPC_RATE_LIMIT_QPS;
+  const now = Date.now();
+  const refill = cap / 1000;
+  let b = buckets.get(ip) || { tokens: cap, last: now };
+  const elapsed = now - b.last;
+  b.tokens = Math.min(cap, b.tokens + elapsed * refill);
+  b.last = now;
+  if (b.tokens < 1) return false;
+  b.tokens -= 1;
+  buckets.set(ip, b);
+  return true;
+}
+
 import { newWallet, getBalance } from '../lib/util.js';
 import { getChain, getMempool, putMempool, getState, putState, getValidators, putValidators } from '../lib/store.js';
 import { addressFromPriv } from '../lib/crypto.js';
@@ -27,6 +45,10 @@ async function readJson(req) {
 }
 
 const server = http.createServer(async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', ALLOW_ORIGINS);
+  if (req.method === 'OPTIONS') { res.writeHead(200); res.end(); return; }
+  const ip = (req.socket.remoteAddress || 'unknown');
+  if (!allow(ip)) { send(res, 429, { ok:false, error:'rate limited' }); return; }
   const parsedUrl = url.parse(req.url, true);  // ⬅️ this parses query string too
   const { pathname, query } = parsedUrl;
   try {
@@ -82,6 +104,7 @@ const server = http.createServer(async (req, res) => {
       return send(res, 200, { ok: true });
     }
     if (req.method === 'POST' && pathname === '/propose') {
+      if (!ENABLE_RPC_WRITE) return send(res, 403, { ok:false, error:'write disabled' });
       const { proposerPrivHex } = await readJson(req);
       if (!proposerPrivHex) return send(res, 400, { ok:false, error:'proposerPrivHex required'});
       const proposerAddr = addressFromPriv(Buffer.from(proposerPrivHex.replace(/^0x/i, ''), 'hex'));

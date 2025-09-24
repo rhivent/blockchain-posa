@@ -1,7 +1,15 @@
-WALLET 1
-Private Key: 0xf333dfcd1b90ab346c29cd06cc9c52382a6405ebe920dda10ea4fee425543c90
-Address   : 0xcaebc73af1c0888ec21a2039ad10efa0037b17d7
+validator 1
+Private Key: 0x5d11e1230e20c7952a58f2b84958ff135a61ae1367add6dc48567a728acd6b5a
+Address   : 0xdd78ab389e628dfb75daaa433c0de029ad50441f
 
-WALLET 2
-Private Key: 0x0a5b79704de862b573f81edfe858af449e83659dfc21d3949b01bed7be15b38b
-Address   : 0x99ab3c99aa70dc1f1a5716f65b5391a0dbe4c33f
+Private Key: 0xad7f66e99da89e197a82338834272d4fc518b69cb0e4f4032aebf7374ccbd4f1
+Address   : 0xd42e72f63fb7a6a9c7a85769de1a3ce3e2c9350c
+
+
+validator 2
+Private Key: 0x1df1204d66fdc60cfd24fb0baf576446208487eeb78ed3342a06769a7025f6dd
+Address   : 0x36bbee6864cc1bfa3225f51f948ef1dce6b6f024
+
+validator 3
+Private Key: 0xf6ace70f83b2ebcfb7928aed61b96cf291470f29aa9619b5e3967f793ee92b84
+Address   : 0x55a3f678d6d936250021bb5f8cc2a5276464a80d
