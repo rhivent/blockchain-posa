@@ -2,6 +2,6 @@ WALLET 1
 Private Key: 0xf333dfcd1b90ab346c29cd06cc9c52382a6405ebe920dda10ea4fee425543c90
 Address   : 0xcaebc73af1c0888ec21a2039ad10efa0037b17d7
 
-WALLET 2nd
+WALLET 2
 Private Key: 0x0a5b79704de862b573f81edfe858af449e83659dfc21d3949b01bed7be15b38b
 Address   : 0x99ab3c99aa70dc1f1a5716f65b5391a0dbe4c33f
