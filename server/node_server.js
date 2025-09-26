@@ -3,7 +3,7 @@ import http from 'http';
 import url from 'url';
 
 import { initGenesis, proposeBlock } from '../lib/chain.js';
-import { ENABLE_RPC_WRITE, RPC_RATE_LIMIT_QPS, ALLOW_ORIGINS } from '../lib/config.js'
+import { ENABLE_RPC_WRITE, RPC_RATE_LIMIT_QPS, ALLOW_ORIGINS, CHAIN_ID } from '../lib/config.js'
 
 // basic token bucket per IP
 const buckets = new Map();
@@ -53,6 +53,11 @@ const server = http.createServer(async (req, res) => {
   const { pathname, query } = parsedUrl;
   try {
     if (req.method === 'GET' && pathname === '/health') {
+      return send(res, 200, { ok: true });
+    }
+    if (req.method === 'GET' && pathname === '/chainId') {
+      const hex = '0x' + Number(CHAIN_ID).toString(16);
+      return send(res, 200, { chainId: CHAIN_ID, chainIdHex: hex });
       return send(res, 200, { ok: true });
     }
     if (req.method === 'POST' && pathname === '/init') {

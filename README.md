@@ -228,3 +228,10 @@ Lenovo@DESKTOP-6TK7HGO MINGW64 /d/projects/jschain-basic
 $ node cli.js balance --address 0x99ab3c99aa70dc1f1a5716f65b5391a0dbe4c33f
 Balance: 25
 ```
+
+
+## Milestone 1 notes
+- Optional `genesis.alloc.json` to pre-fund accounts at genesis.
+- Fees: flat TX fee goes to Treasury by default (configurable split via `FEE_TREASURY_BPS`).
+- Faucet is **disabled** by default unless `DEV_FAUCET=true` in `.env.local`.
+- `GET /chainId` returns decimal & hex for clients. For EVM JSON-RPC, implement `eth_chainId` later (Milestone 5).
